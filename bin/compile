@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
+export JRUBY_OPTS="--server --1.9 -J-Xmx400m -Xcext.enabled=true"
 
 # fail fast
 set -e
@@ -30,7 +31,7 @@ function download_jruby_and_install_default_gems {
     PATH=$CACHE_DIR/jruby-$VERSION/bin:$PATH
 
     echo "-----> Installing JRuby-OpenSSL, Bundler and Rake"
-    jruby $JRUBY_OPTS -S jgem install jruby-openssl bundler rake | indent 
+    jruby -S jgem install jruby-openssl bundler rake | indent 
   fi
 }
 
@@ -56,7 +57,7 @@ function bundle_install {
   echo "-----> Installing dependencies with Bundler"
 
   cd $BUILD_DIR
-  jruby $JRUBY_OPTS -r openssl -S bundle install --without development:test --binstubs --deployment | indent
+  jruby -r openssl -S bundle install --without development:test --binstubs --deployment | indent
 
   echo "Dependencies installed" | indent
 }
@@ -151,7 +152,6 @@ function precompile_assets {
   env DATABASE_URL=postgres://user:pass@127.0.0.1/dbname jruby $JRUBY_OPTS -S bin/rake assets:precompile 2>&1 | indent
 }
 
-JRUBY_OPTS="--server --1.9 -J-Xmx400m -Xcext.enabled=true"
 VERSION="1.7.0.preview2"
 
 download_jruby_and_install_default_gems
