@@ -6,7 +6,7 @@ export JRUBY_OPTS="--server --1.9 -J-Xmx400m -Xcext.enabled=true"
 set -e
 
 # debug
-set -x
+#set -x
 
 # clean up leaking environment
 unset GIT_DIR
