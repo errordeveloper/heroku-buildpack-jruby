@@ -152,7 +152,7 @@ function precompile_assets {
   env DATABASE_URL=postgres://user:pass@127.0.0.1/dbname jruby $JRUBY_OPTS -S bin/rake assets:precompile 2>&1 | indent
 }
 
-VERSION='1.7.0.preview1'
+VERSION='1.7.0.preview2'
 
 download_jruby_and_install_default_gems
 copy_jruby_to_build
